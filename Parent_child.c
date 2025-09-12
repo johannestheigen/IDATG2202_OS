@@ -5,7 +5,6 @@
 /**
 * Simple program that demonstrates the use of the fork() system call.
 *
-* Edit made in SkyHigh
 * @author Johannes Nupen Theigen
 * @version 11.09.2025
 * @since 10.09.2025
