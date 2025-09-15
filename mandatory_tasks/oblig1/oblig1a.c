@@ -16,6 +16,9 @@ depth=0 pid=120023 ppid=119864
         depth=1 pid=120024 ppid=120023
                 depth=2 pid=120026 ppid=120024
 
+@author Johannes Nupen Theigen
+@version 15.09.2025
+@since 15.09.2025
 */
 int main(void) {
     pid_t pid1, pid2; // Child processes to be forked
