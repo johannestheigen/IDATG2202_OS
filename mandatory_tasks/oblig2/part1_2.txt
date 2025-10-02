@@ -1,0 +1,32 @@
+When you compile with gcc -g the following output is shown
+by gdb:
+
+Starting program: /home/ubuntu/IDATG2202_OS/mandatory_tasks/oblig2/null
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+
+Program received signal SIGSEGV, Segmentation fault.
+0x0000555555555161 in main () at null.c:22
+22      printf("Attempting to dereference pointer '*num_ptr': %d\n", *num_ptr); // This will never print out
+(gdb)
+
+
+The information we get is that a segmentation fault occurred, and it also shows where in memory it happened.
+In this case, it happened at "0x0000555555555161", and we see in the source code 
+that it was line 22, because that line tries to dereference a NULL pointer.
+
+When compiled without gcc -g the following output is shown by gdb:
+
+(gdb) run
+Starting program: /home/ubuntu/IDATG2202_OS/mandatory_tasks/oblig2/null
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+
+Program received signal SIGSEGV, Segmentation fault.
+0x0000555555555161 in main ()
+(gdb)
+
+
+This only shows that a segmentation fault happened and where in memory it happened.
+When gcc -g is used when compiling a C program, more information is provided and put directly into 
+the executable, enabling the debugger to access more useful information about variable names and the like. 
