@@ -1,0 +1,39 @@
+1)
+
+When running getconf PAGESIZE, the output is 4096.
+This indicates that the operating system used for
+this task has a page size of 4096 bytes, or approximately 4 KB,
+which is a typical page size on x86 operating systems. 
+
+2)
+
+The program 'adrtr.c' prints out the virtual address of a variable
+that memory implicitly allocated by the compiler on the stack 
+(automatic storage). The address recieved in output was 0x7ffcf4a0b497,
+which is in hexadecimal.
+
+We are now going to split the virtual address your program printed into 
+the virtual page number (VPN) and the offset.
+
+First of all we need convert the hexadecimal address into binary.
+
+0x7ffcf4a0b497 =
+
+0111 1111 1111 1100 1111 0100 1010 0000 1011 0100 1001 0111
+
+From earlier we found out that a page size is 4096 B, or 2^12 B. From this, we know that the offset
+must be the last 12 bits of the address we converted into binary 0100 1001 0111.
+
+Since this is a 64-bit architecture, we also know that the VPN is split into four levels.
+Because the offset is 12 bits and the virtual address is typically 48 bits long, this gives us
+48 − 12 = 36 bits for the page numbers (VPNs). Since the VPN is split into four levels, 
+this gives us 9 bits per VPN. 
+
+0111 1111 1111 1100 1111 0100 1010 0000 1011 gives us the following page indices:
+
+PML4 index = 011111111 = 255
+PDPT index = 111110011 = 499
+PD index = 110100101 = 421
+PT index = 000001011 = 11 
+
+We have now translated the address provided by 'adrtr.c'.
