@@ -36,3 +36,10 @@ The array belongs to virtual memory pages that are not yet mapped to physical RA
 this causes page faults, and the operating system allocates the required physical memory. Only after finishing the for-loop 
 does it call the pause() system call, meaning that while adding integers to the array, 'mem2.c' ends up using more physical memory
 compared to 'mem1.c'.
+
+To further explain this. The difference between virtual and physical memory (RAM) is that physical memory is 
+the actual RAM of the machine, while virtual memory is a private address space provided by the operating system 
+and mapped onto physical memory as needed. This difference explains why 'mem1.c' and 'mem2.c' had the same amount of 
+virtual space since they both declared a private address space of the same size. However, only the address space
+of 'mem2.c' was accessed and modified during runtime, which caused the operating system to allocate actual physical
+memory.
