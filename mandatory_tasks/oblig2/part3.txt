@@ -1,0 +1,38 @@
+When 'mem1.c' is compiled and run, 'top -n 1 - p$(pgrep mem1)' gives us
+the following values for VIRT (virtual memory) and RES (physical memory):
+
+VIRT:   RES:
+3708   1408
+
+When 'mem2' is compiled and run in the background, 'top -n 1 p$(pgrep mem2)' gives
+us the following values for VIRT and RES:
+
+VIRT:  RES:
+3708   2432
+
+As we can notice, the values for VIRT are the same. 
+This can be explained by the fact that both programs declare the same amount of virtual memory.
+
+int size = S; // S is declared as 1024*256
+int *array = malloc(size * sizeof(int)); 
+
+These lines are identical in both programs, and since they declare the same array,
+they allocate the same amount of virtual space.
+
+On the other hand, we notice that the values for RES differ between 'mem1.c' and 'mem2.c', where difference is 1024 B. 
+How can this happen if both programs declare the exact same space? If we examine the two source codes, we see that 
+after allocating virtual memory, 'mem1.c' immediately uses the system call pause(), which causes the calling process 
+or thread to sleep until a signal is delivered that either terminates the process. In other words, no data is accessed 
+and changed during runtime.
+
+In 'mem2.c', the program initiates a for-loop that iterates through all the elements 
+of the newly created array and assigns an integer to each index n-1.
+
+for(i=0;i < size;i++) {
+      array[i] = i;
+   }
+
+The array belongs to virtual memory pages that are not yet mapped to physical RAM. When the array is first accessed,
+this causes page faults, and the operating system allocates the required physical memory. Only after finishing the for-loop 
+does it call the pause() system call, meaning that while adding integers to the array, 'mem2.c' ends up using more physical memory
+compared to 'mem1.c'.
