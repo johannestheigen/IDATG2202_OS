@@ -1,3 +1,11 @@
+/**
+ * Program used to demonstrate the usage of locks on threads.
+ *
+ * @author Erik Hjelmås
+ * @author Johannes Nupen Theigen (Modified to solve task)
+ * @version 14.10.2025
+ * @since 14.10.2025
+ */
 #include <stdio.h>
 #include <pthread.h>
 #include <string.h>
